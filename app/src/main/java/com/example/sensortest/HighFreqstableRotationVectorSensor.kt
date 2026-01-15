@@ -17,13 +17,13 @@ class HighFreqStableRotationVectorSensor : SensorEventListener {
     private var gx = 0f
     private var gy = 0f
     private var gz = 0f
-    private val ALPHA = 0.90f
+    private val ALPHA = 0.1f
 
     // ---------------- 姿态角
     private var pitch = 0f
     private var roll = 0f
     private var yaw = 0f
-    private val K = 0.90f
+    private val K = 0.1f
 
     private var lastTimestamp: Long = 0L
 

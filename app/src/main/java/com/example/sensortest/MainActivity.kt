@@ -1,5 +1,6 @@
 package com.example.sensortest;
 
+import IMUController
 import android.content.Context
 import android.hardware.Sensor
 import android.hardware.SensorEvent
@@ -34,7 +35,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
     private var gy = 0f
     private var gz = 0f
 
-    private val ALPHA = 0.15f   // 0.9 ~ 0.98
+    private val ALPHA = 0.9f   // 0.9 ~ 0.98
 
     private var gpitch = 0f
     private var groll = 0f
@@ -43,7 +44,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
     private var roll = 0f
     private var lastTimestamp = 0L
 
-    private val K = 0.15f
+    private val K = 0.9f
 
     private val virtualVector = VirtualRotationVector()
 
@@ -54,17 +55,19 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
 
     private lateinit var glView:OrientationGLSurfaceView
     private lateinit var renderer: OrientationRenderer
-    private lateinit var sensorCtl: SensorController
+    //private lateinit var sensorCtl: SensorController
+    private lateinit var sensorCtl: IMUController
 
     private val sensorTypeList = listOf(
         Sensor.TYPE_ACCELEROMETER,
-        //Sensor.TYPE_GYROSCOPE,
-        //Sensor.TYPE_MAGNETIC_FIELD,
+        Sensor.TYPE_GYROSCOPE,
+        Sensor.TYPE_MAGNETIC_FIELD,
         Sensor.TYPE_LIGHT,
         Sensor.TYPE_PROXIMITY,
-        //Sensor.TYPE_PRESSURE,
+        Sensor.TYPE_PRESSURE,
+        27,
         57, //COLOR_TEMP
-        27
+
     )
 
     private fun accAngle(ax: Float, ay: Float, az: Float): Pair<Float, Float> {
@@ -102,9 +105,12 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         glView.setRenderer(renderer)
         glView.renderMode = GLSurfaceView.RENDERMODE_CONTINUOUSLY
 
-        sensorCtl = SensorController(
+        sensorCtl = IMUController(
             glView,
             renderer)
+//        sensorCtl = SensorController(
+//            glView,
+//            renderer)
 
         val sensorList = sm.getSensorList(Sensor.TYPE_ALL)
             .sortedBy { it.type }

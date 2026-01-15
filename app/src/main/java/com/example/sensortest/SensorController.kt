@@ -87,7 +87,7 @@ class SensorController(
         val rotationVector = virtualVector.getRotationVector()
         val orientation = virtualVector.rotationSensor.getOrientation()
 
-        //val (adjPitch, adjRoll, adjYaw) = adjustForScreenRotation(orientation.first, orientation.second, orientation.third)
+        val (adjPitch, adjRoll, adjYaw) = adjustForScreenRotation(orientation.first, orientation.second, orientation.third)
 
         // ⭐ 关键：切到 GL 线程，只传数据
         glView.queueEvent {
